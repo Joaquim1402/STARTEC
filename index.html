@@ -59,6 +59,12 @@
         .subject-folder:hover {
             transform: scale(1.03);
         }
+        
+        .icon-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -71,6 +77,10 @@
                     <h1 class="text-2xl md:text-3xl font-bold">STARTEC</h1>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 bg-green-600 px-4 py-2 rounded-full ml-4">
+                        <i class="fab fa-whatsapp text-white"></i>
+                        <a href="https://chat.whatsapp.com/FIHJ7zTs9VqDD93kgpZLMg" class="text-white hover:text-white" target="_blank">Comunidade</a>
+                    </div>
                     <div class="relative">
                         <button class="p-2 rounded-full hover:bg-blue-800 transition">
                             <i class="fas fa-bell text-xl"></i>
@@ -88,6 +98,20 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
+        <!-- Comunidade WhatsApp -->
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+            <div class="flex items-center">
+                <div class="bg-green-100 p-3 rounded-full mr-4 icon-center">
+                    <i class="fab fa-whatsapp text-green-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-green-800">Junte-se à nossa comunidade!</h3>
+                    <p class="text-sm text-green-700 mb-2">Tire dúvidas e receba dicas no nosso grupo do WhatsApp</p>
+                    <a href="https://chat.whatsapp.com/FIHJ7zTs9VqDD93kgpZLMg" class="text-sm font-medium text-green-600 hover:text-green-800" target="_blank">Entrar agora →</a>
+                </div>
+            </div>
+        </div>
+
         <!-- User Stats -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-white rounded-xl shadow-md p-6 flex items-center">
@@ -123,7 +147,7 @@
             
             <div class="bg-white rounded-xl shadow-md p-6 flex items-center">
                 <div class="mr-4">
-                    <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+                    <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center icon-center">
                         <i class="fas fa-medal text-2xl text-yellow-500"></i>
                     </div>
                 </div>
@@ -136,7 +160,7 @@
             
             <div class="bg-white rounded-xl shadow-md p-6 flex items-center">
                 <div class="mr-4">
-                    <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+                    <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center icon-center">
                         <i class="fas fa-fire text-2xl text-red-500"></i>
                     </div>
                 </div>
@@ -198,7 +222,7 @@
                         <!-- Simulado ETE Completo -->
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-school text-blue-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Simulado ETE - Completo</h3>
@@ -212,13 +236,13 @@
                                 <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 60min</span>
                                 <span class="text-sm text-gray-500"><i class="fas fa-question-circle mr-1"></i> 20 questões</span>
                             </div>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium">Iniciar Simulado</button>
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="startTest('ete-completo')">Iniciar Simulado</button>
                         </div>
                         
                         <!-- Atividade de Matemática -->
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-purple-100 p-3 rounded-full mr-4">
+                                <div class="bg-purple-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-square-root-alt text-purple-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Atividade: Equações</h3>
@@ -232,13 +256,13 @@
                                 <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 30min</span>
                                 <span class="text-sm text-gray-500"><i class="fas fa-question-circle mr-1"></i> 10 questões</span>
                             </div>
-                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium">Iniciar Atividade</button>
+                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="startTest('equacoes')">Iniciar Atividade</button>
                         </div>
                         
                         <!-- Simulado ETE - Português -->
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <div class="bg-green-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-book text-green-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Simulado ETE - Português</h3>
@@ -253,13 +277,13 @@
                                 <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 30min</span>
                                 <span class="text-sm text-gray-500"><i class="fas fa-question-circle mr-1"></i> 10 questões</span>
                             </div>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium">Iniciar Simulado</button>
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="startTest('ete-portugues')">Iniciar Simulado</button>
                         </div>
                         
                         <!-- Atividade de Português -->
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                                <div class="bg-yellow-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-book text-yellow-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Atividade: Concordância</h3>
@@ -273,13 +297,13 @@
                                 <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 30min</span>
                                 <span class="text-sm text-gray-500"><i class="fas fa-question-circle mr-1"></i> 10 questões</span>
                             </div>
-                            <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-full text-sm font-medium">Iniciar Atividade</button>
+                            <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="startTest('concordancia')">Iniciar Atividade</button>
                         </div>
                         
                         <!-- Simulado ETE - Matemática -->
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-red-100 p-3 rounded-full mr-4">
+                                <div class="bg-red-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-calculator text-red-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Simulado ETE - Matemática</h3>
@@ -294,13 +318,13 @@
                                 <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 30min</span>
                                 <span class="text-sm text-gray-500"><i class="fas fa-question-circle mr-1"></i> 10 questões</span>
                             </div>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium">Iniciar Simulado</button>
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="startTest('ete-matematica')">Iniciar Simulado</button>
                         </div>
                         
                         <!-- Simulado IFPE - Completo -->
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                <div class="bg-indigo-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-bolt text-indigo-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Simulado IFPE - Completo</h3>
@@ -315,7 +339,7 @@
                                 <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 90min</span>
                                 <span class="text-sm text-gray-500"><i class="fas fa-question-circle mr-1"></i> 30 questões</span>
                             </div>
-                            <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium">Iniciar Quiz</button>
+                            <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium" onclick="startTest('ifpe-completo')">Iniciar Quiz</button>
                         </div>
                     </div>
                     
@@ -587,7 +611,7 @@
                                     <div class="text-4xl font-bold text-yellow-600">Nível 4</div>
                                     <div class="text-sm text-yellow-700">Estudante Bronze</div>
                                 </div>
-                                <div class="h-24 w-24 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <div class="h-24 w-24 bg-yellow-100 rounded-full flex items-center justify-center icon-center">
                                     <i class="fas fa-award text-4xl text-yellow-600"></i>
                                 </div>
                             </div>
@@ -609,7 +633,7 @@
                             <h3 class="text-xl font-bold text-blue-800 mb-4">Próximas Conquistas</h3>
                             <div class="space-y-4">
                                 <div class="flex items-start">
-                                    <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-medal text-blue-600"></i>
                                     </div>
                                     <div>
@@ -618,7 +642,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-star text-blue-600"></i>
                                     </div>
                                     <div>
@@ -627,7 +651,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-start">
-                                    <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-trophy text-blue-600"></i>
                                     </div>
                                     <div>
@@ -642,35 +666,35 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Badges Conquistadas</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                            <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 icon-center">
                                 <i class="fas fa-rocket text-2xl text-yellow-600"></i>
                             </div>
                             <h4 class="font-medium text-sm">Iniciante</h4>
                             <p class="text-xs text-gray-500">Primeiro acesso</p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                            <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 icon-center">
                                 <i class="fas fa-book text-2xl text-blue-600"></i>
                             </div>
                             <h4 class="font-medium text-sm">Leitor</h4>
                             <p class="text-xs text-gray-500">5 materiais lidos</p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 icon-center">
                                 <i class="fas fa-check-circle text-2xl text-green-600"></i>
                             </div>
                             <h4 class="font-medium text-sm">Focado</h4>
                             <p class="text-xs text-gray-500">1 semana de estudos</p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-lg p-4 text-center opacity-40">
-                            <div class="bg-gray-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <div class="bg-gray-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 icon-center">
                                 <i class="fas fa-brain text-2xl text-gray-600"></i>
                             </div>
                             <h4 class="font-medium text-sm">Mestre</h4>
                             <p class="text-xs text-gray-500">Nível 10</p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-lg p-4 text-center opacity-40">
-                            <div class="bg-gray-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <div class="bg-gray-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 icon-center">
                                 <i class="fas fa-gem text-2xl text-gray-600"></i>
                             </div>
                             <h4 class="font-medium text-sm">Diamante</h4>
@@ -682,7 +706,7 @@
                         <h3 class="text-xl font-bold text-gray-800 mb-4">Como Ganhar Mais Pontos</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="flex items-start p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                     <i class="fas fa-check text-blue-600"></i>
                                 </div>
                                 <div>
@@ -691,7 +715,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                     <i class="fas fa-video text-blue-600"></i>
                                 </div>
                                 <div>
@@ -700,7 +724,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                     <i class="fas fa-clipboard-list text-blue-600"></i>
                                 </div>
                                 <div>
@@ -709,7 +733,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                     <i class="fas fa-fire text-blue-600"></i>
                                 </div>
                                 <div>
@@ -727,7 +751,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-white p-4 rounded-lg border border-gray-200">
                                 <div class="flex items-center mb-3">
-                                    <div class="bg-purple-100 p-2 rounded-full mr-3">
+                                    <div class="bg-purple-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-book-open text-purple-600"></i>
                                     </div>
                                     <h4 class="font-bold">Material Bônus</h4>
@@ -741,7 +765,7 @@
                             
                             <div class="bg-white p-4 rounded-lg border border-gray-200">
                                 <div class="flex items-center mb-3">
-                                    <div class="bg-green-100 p-2 rounded-full mr-3">
+                                    <div class="bg-green-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-user-tie text-green-600"></i>
                                     </div>
                                     <h4 class="font-bold">Certificado</h4>
@@ -755,7 +779,7 @@
                             
                             <div class="bg-white p-4 rounded-lg border border-gray-200">
                                 <div class="flex items-center mb-3">
-                                    <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-medal text-blue-600"></i>
                                     </div>
                                     <h4 class="font-bold">Simulado VIP</h4>
@@ -794,7 +818,7 @@
                             <!-- Matemática -->
                             <div class="bg-white p-4 rounded-lg shadow-sm">
                                 <div class="flex items-center mb-3">
-                                    <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                    <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-square-root-alt text-blue-600"></i>
                                     </div>
                                     <h4 class="font-bold text-gray-800">Matemática</h4>
@@ -817,7 +841,7 @@
                             <!-- Português -->
                             <div class="bg-white p-4 rounded-lg shadow-sm">
                                 <div class="flex items-center mb-3">
-                                    <div class="bg-green-100 p-2 rounded-full mr-3">
+                                    <div class="bg-green-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-book text-green-600"></i>
                                     </div>
                                     <h4 class="font-bold text-gray-800">Português</h4>
@@ -840,7 +864,7 @@
                             <!-- Comparativo -->
                             <div class="bg-white p-4 rounded-lg shadow-sm">
                                 <div class="flex items-center mb-3">
-                                    <div class="bg-purple-100 p-2 rounded-full mr-3">
+                                    <div class="bg-purple-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-chart-bar text-purple-600"></i>
                                     </div>
                                     <h4 class="font-bold text-gray-800">Comparativo</h4>
@@ -868,7 +892,7 @@
                             <!-- Evolução -->
                             <div class="bg-white p-4 rounded-lg shadow-sm">
                                 <div class="flex items-center mb-3">
-                                    <div class="bg-yellow-100 p-2 rounded-full mr-3">
+                                    <div class="bg-yellow-100 p-2 rounded-full mr-3 icon-center">
                                         <i class="fas fa-chart-line text-yellow-600"></i>
                                     </div>
                                     <h4 class="font-bold text-gray-800">Sua Evolução</h4>
@@ -897,7 +921,7 @@
                         
                         <div class="space-y-4">
                             <div class="flex items-start">
-                                <div class="bg-red-100 p-2 rounded-full mr-3 mt-1">
+                                <div class="bg-red-100 p-2 rounded-full mr-3 mt-1 icon-center">
                                     <i class="fas fa-exclamation text-red-600"></i>
                                 </div>
                                 <div>
@@ -911,7 +935,7 @@
                             </div>
                             
                             <div class="flex items-start">
-                                <div class="bg-yellow-100 p-2 rounded-full mr-3 mt-1">
+                                <div class="bg-yellow-100 p-2 rounded-full mr-3 mt-1 icon-center">
                                     <i class="fas fa-clock text-yellow-600"></i>
                                 </div>
                                 <div>
@@ -924,7 +948,7 @@
                             </div>
                             
                             <div class="flex items-start">
-                                <div class="bg-blue-100 p-2 rounded-full mr-3 mt-1">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3 mt-1 icon-center">
                                     <i class="fas fa-lightbulb text-blue-600"></i>
                                 </div>
                                 <div>
@@ -954,7 +978,7 @@
                         <h3 class="text-xl font-bold text-gray-800 mb-4">Materiais Recomendados</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="flex items-start p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                     <i class="fas fa-video text-blue-600"></i>
                                 </div>
                                 <div>
@@ -963,7 +987,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <div class="bg-green-100 p-2 rounded-full mr-3 icon-center">
                                     <i class="fas fa-file-alt text-green-600"></i>
                                 </div>
                                 <div>
@@ -972,7 +996,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-purple-100 p-2 rounded-full mr-3">
+                                <div class="bg-purple-100 p-2 rounded-full mr-3 icon-center">
                                     <i class="fas fa-tasks text-purple-600"></i>
                                 </div>
                                 <div>
@@ -981,7 +1005,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-yellow-100 p-2 rounded-full mr-3">
+                                <div class="bg-yellow-100 p-2 rounded-full mr-3 icon-center">
                                     <i class="fas fa-question-circle text-yellow-600"></i>
                                 </div>
                                 <div>
@@ -1025,7 +1049,7 @@
                                 </div>
                                 <div class="space-y-3">
                                     <div class="flex items-center">
-                                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                        <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                             <i class="fas fa-calculator text-blue-600"></i>
                                         </div>
                                         <div>
@@ -1034,7 +1058,7 @@
                                         </div>
                                     </div>
                                     <div class="flex items-center">
-                                        <div class="bg-green-100 p-2 rounded-full mr-3">
+                                        <div class="bg-green-100 p-2 rounded-full mr-3 icon-center">
                                             <i class="fas fa-book text-green-600"></i>
                                         </div>
                                         <div>
@@ -1058,7 +1082,7 @@
                                     <div class="space-y-4">
                                         <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                             <div class="flex items-center">
-                                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                                <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                                     <i class="fas fa-check-circle text-blue-600"></i>
                                                 </div>
                                                 <div>
@@ -1071,7 +1095,7 @@
                                         
                                         <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                             <div class="flex items-center">
-                                                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                                <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
                                                     <i class="fas fa-check-circle text-blue-600"></i>
                                                 </div>
                                                 <div>
@@ -1084,7 +1108,7 @@
                                         
                                         <div class="flex items-center justify-between p-3 bg-white border border-blue-200 rounded-lg">
                                             <div class="flex items-center">
-                                                <div class="bg-yellow-100 p-2 rounded-full mr-3">
+                                                <div class="bg-yellow-100 p-2 rounded-full mr-3 icon-center">
                                                     <i class="fas fa-play-circle text-yellow-600"></i>
                                                 </div>
                                                 <div>
@@ -1097,7 +1121,7 @@
                                         
                                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                             <div class="flex items-center">
-                                                <div class="bg-gray-200 p-2 rounded-full mr-3">
+                                                <div class="bg-gray-200 p-2 rounded-full mr-3 icon-center">
                                                     <i class="fas fa-lock text-gray-500"></i>
                                                 </div>
                                                 <div>
@@ -1117,7 +1141,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-video text-blue-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Videoaula: Equações</h3>
@@ -1128,7 +1152,7 @@
                         
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <div class="bg-green-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-tasks text-green-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Exercícios Práticos</h3>
@@ -1139,7 +1163,7 @@
                         
                         <div class="feature-card bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="bg-purple-100 p-3 rounded-full mr-4">
+                                <div class="bg-purple-100 p-3 rounded-full mr-4 icon-center">
                                     <i class="fas fa-clipboard-check text-purple-600"></i>
                                 </div>
                                 <h3 class="font-semibold text-lg">Quiz Rápido</h3>
@@ -1254,6 +1278,28 @@
         </div>
     </footer>
 
+    <!-- Modal para Simulados -->
+    <div id="testModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold" id="modalTitle">Simulado ETE - Completo</h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mb-4">
+                <p id="modalDescription">Prova completa no formato das Escolas Técnicas Estaduais</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" id="questionsContainer">
+                <!-- Questões serão inseridas aqui dinamicamente -->
+            </div>
+            <div class="flex justify-between items-center">
+                <span id="timer" class="font-medium">Tempo restante: 60:00</span>
+                <button onclick="submitTest()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium">Enviar Respostas</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function openTab(evt, tabName) {
             // Hide all tab contents
@@ -1283,6 +1329,455 @@
                 firstTabButton.classList.add("bg-blue-600", "text-white");
             }
         });
+
+        function openSubject(subject) {
+            alert(`Abrindo a pasta de ${subject}`);
+            // Aqui você pode implementar a lógica para carregar os conteúdos do assunto selecionado
+        }
+
+        // Funções para o modal de simulados
+        function startTest(testType) {
+            const modal = document.getElementById('testModal');
+            const title = document.getElementById('modalTitle');
+            const description = document.getElementById('modalDescription');
+            const questionsContainer = document.getElementById('questionsContainer');
+            
+            // Definir título e descrição com base no tipo de teste
+            switch(testType) {
+                case 'ete-completo':
+                    title.textContent = 'Simulado ETE - Completo';
+                    description.textContent = 'Prova completa no formato das Escolas Técnicas Estaduais';
+                    loadETEQuestions();
+                    break;
+                case 'ete-portugues':
+                    title.textContent = 'Simulado ETE - Português';
+                    description.textContent = 'Prova de Português no formato ETE';
+                    loadETEPortuguesQuestions();
+                    break;
+                case 'ete-matematica':
+                    title.textContent = 'Simulado ETE - Matemática';
+                    description.textContent = 'Prova de Matemática no formato ETE';
+                    loadETEMatematicaQuestions();
+                    break;
+                case 'equacoes':
+                    title.textContent = 'Atividade: Equações';
+                    description.textContent = 'Exercícios específicos sobre equações de 1º grau';
+                    loadEquacoesQuestions();
+                    break;
+                case 'concordancia':
+                    title.textContent = 'Atividade: Concordância';
+                    description.textContent = 'Exercícios sobre concordância verbal e nominal';
+                    loadConcordanciaQuestions();
+                    break;
+                case 'ifpe-completo':
+                    title.textContent = 'Simulado IFPE - Completo';
+                    description.textContent = 'Teste rápido de conhecimentos em Matemática e Português';
+                    loadIFPEQuestions();
+                    break;
+            }
+            
+            modal.classList.remove('hidden');
+            startTimer(60); // 60 minutos para o simulado
+        }
+
+        function closeModal() {
+            document.getElementById('testModal').classList.add('hidden');
+        }
+
+        function submitTest() {
+            alert('Respostas enviadas com sucesso!');
+            closeModal();
+            // Aqui você pode implementar a lógica para calcular a pontuação e mostrar os resultados
+        }
+
+        function startTimer(minutes) {
+            let seconds = minutes * 60;
+            const timerElement = document.getElementById('timer');
+            
+            const timer = setInterval(() => {
+                seconds--;
+                if (seconds < 0) {
+                    clearInterval(timer);
+                    submitTest();
+                    return;
+                }
+                
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                timerElement.textContent = `Tempo restante: ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Funções para carregar questões específicas
+        function loadETEQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            // Questões de Matemática - ETE
+            const mathQuestions = [
+                {
+                    question: 'Marque a alternativa que indica a área do retângulo da figura com dimensões (6 + √7) e (4 - √7)',
+                    options: [
+                        'a. 15 - 2√7',
+                        'b. 16 - 2√7',
+                        'c. 17 - 2√7',
+                        'd. 18 - 2√7',
+                        'e. 19 - 2√7'
+                    ],
+                    correct: 'c'
+                },
+                {
+                    question: 'Na sala de aula, 30% dos alunos torcem para o Santa Cruz. Sabendo que existem 40 alunos na sala, quantos torcem para o Santa Cruz?',
+                    options: [
+                        'a. 8',
+                        'b. 12',
+                        'c. 16',
+                        'd. 20',
+                        'e. 24'
+                    ],
+                    correct: 'b'
+                },
+                {
+                    question: 'Numa vila há 8 ruas, em cada rua há 8 casas, em cada casa moram 8 pessoas. Quantas pessoas moram nessa vila?',
+                    options: [
+                        'a. 24',
+                        'b. 72',
+                        'c. 125',
+                        'd. 215',
+                        'e. 512'
+                    ],
+                    correct: 'e'
+                }
+            ];
+            
+            // Questões de Português - ETE
+            const portugueseQuestions = [
+                {
+                    question: 'Ao usar a expressão "homem-poste", o autor sugere que o homem está',
+                    options: [
+                        'a. preocupado com a vida',
+                        'b. observando o movimento',
+                        'c. extremamente atento',
+                        'd. cansado de esperar o trem',
+                        'e. desligado da realidade'
+                    ],
+                    correct: 'e'
+                },
+                {
+                    question: 'No primeiro quadro, na fala da professora, há a ocorrência de:',
+                    options: [
+                        'a. prosopopeia',
+                        'b. aliteração',
+                        'c. catacrese',
+                        'd. metáfora',
+                        'e. ironia'
+                    ],
+                    correct: 'b'
+                }
+            ];
+            
+            // Adicionar todas as questões ao container
+            [...mathQuestions, ...portugueseQuestions].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
+                questionDiv.innerHTML = `
+                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
+                    <div class="space-y-2">
+                        ${q.options.map(opt => `
+                            <label class="flex items-center">
+                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function loadETEPortuguesQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            // Questões de Português - ETE
+            const questions = [
+                {
+                    question: 'Ao usar a expressão "homem-poste", o autor sugere que o homem está',
+                    options: [
+                        'a. preocupado com a vida',
+                        'b. observando o movimento',
+                        'c. extremamente atento',
+                        'd. cansado de esperar o trem',
+                        'e. desligado da realidade'
+                    ],
+                    correct: 'e'
+                },
+                {
+                    question: 'No primeiro quadro, na fala da professora, há a ocorrência de:',
+                    options: [
+                        'a. prosopopeia',
+                        'b. aliteração',
+                        'c. catacrese',
+                        'd. metáfora',
+                        'e. ironia'
+                    ],
+                    correct: 'b'
+                },
+                {
+                    question: 'A palavra "comodidade" é formada pelo processo de sufixação, assim como:',
+                    options: [
+                        'a. infeliz, casa',
+                        'b. paz, ciência',
+                        'c. comumente, baronesa',
+                        'd. encanto, ideia',
+                        'e. água, boiada'
+                    ],
+                    correct: 'c'
+                }
+            ];
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
+                questionDiv.innerHTML = `
+                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
+                    <div class="space-y-2">
+                        ${q.options.map(opt => `
+                            <label class="flex items-center">
+                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function loadETEMatematicaQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            // Questões de Matemática - ETE
+            const questions = [
+                {
+                    question: 'Marque a alternativa que indica a área do retângulo da figura com dimensões (6 + √7) e (4 - √7)',
+                    options: [
+                        'a. 15 - 2√7',
+                        'b. 16 - 2√7',
+                        'c. 17 - 2√7',
+                        'd. 18 - 2√7',
+                        'e. 19 - 2√7'
+                    ],
+                    correct: 'c'
+                },
+                {
+                    question: 'Na sala de aula, 30% dos alunos torcem para o Santa Cruz. Sabendo que existem 40 alunos na sala, quantos torcem para o Santa Cruz?',
+                    options: [
+                        'a. 8',
+                        'b. 12',
+                        'c. 16',
+                        'd. 20',
+                        'e. 24'
+                    ],
+                    correct: 'b'
+                },
+                {
+                    question: 'Numa vila há 8 ruas, em cada rua há 8 casas, em cada casa moram 8 pessoas. Quantas pessoas moram nessa vila?',
+                    options: [
+                        'a. 24',
+                        'b. 72',
+                        'c. 125',
+                        'd. 215',
+                        'e. 512'
+                    ],
+                    correct: 'e'
+                },
+                {
+                    question: 'O Homem-Escorpião, o Menino-Vespa e a Garota-Abelha já derrotaram, juntos, 600 vilões na proporção 13, 2 e 5, respectivamente. Quantos vilões o Homem-Escorpião derrotou a mais que o Menino-Vespa?',
+                    options: [
+                        'a. 90 vilões',
+                        'b. 210 vilões',
+                        'c. 240 vilões',
+                        'd. 330 vilões',
+                        'e. 360 vilões'
+                    ],
+                    correct: 'd'
+                }
+            ];
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
+                questionDiv.innerHTML = `
+                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
+                    <div class="space-y-2">
+                        ${q.options.map(opt => `
+                            <label class="flex items-center">
+                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function loadEquacoesQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            // Questões de Equações
+            const questions = [
+                {
+                    question: 'Jorge gastou 30% do seu salário com mensalidade escolar, 25% com aluguel e 10% com alimentação e ainda ficou com R$ 509,60. Qual o valor do salário de Jorge?',
+                    options: [
+                        'a. R$ 1.146,00',
+                        'b. R$ 1.268,00',
+                        'c. R$ 1.324,00',
+                        'd. R$ 1.456,00',
+                        'e. R$ 1.689,00'
+                    ],
+                    correct: 'd'
+                },
+                {
+                    question: 'Uma casa foi projetada em formato retangular com as seguintes medidas: 10m de comprimento por 20m de largura. O proprietário pediu que a área da casa fosse aumentada em 25m². Jorge decidiu diminuir x metros na largura e aumentar x metros no comprimento, de modo a não alterar o perímetro. Qual o valor de x?',
+                    options: [
+                        'a. 6,0m',
+                        'b. 4,5m',
+                        'c. 3,5m',
+                        'd. 5,5m',
+                        'e. 5,0m'
+                    ],
+                    correct: 'e'
+                }
+            ];
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
+                questionDiv.innerHTML = `
+                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
+                    <div class="space-y-2">
+                        ${q.options.map(opt => `
+                            <label class="flex items-center">
+                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function loadConcordanciaQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            // Questões de Concordância
+            const questions = [
+                {
+                    question: 'No trecho: "O engenheiro e a médica saíram rapidamente. Seu filho permaneceu no local", ocorre:',
+                    options: [
+                        'a. eufemismo',
+                        'b. comparação',
+                        'c. catacrese',
+                        'd. metonímia',
+                        'e. ambiguidade'
+                    ],
+                    correct: 'e'
+                },
+                {
+                    question: 'Marque a alternativa correta quanto à regência:',
+                    options: [
+                        'a. Trouxe consigo as pessoas de que confiava.',
+                        'b. Trouxe consigo as pessoas para que confiava.',
+                        'c. Trouxe consigo as pessoas em que confiava.',
+                        'd. Trouxe consigo as pessoas das quais confiava.',
+                        'e. Trouxe consigo as pessoas da qual confiava.'
+                    ],
+                    correct: 'c'
+                }
+            ];
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
+                questionDiv.innerHTML = `
+                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
+                    <div class="space-y-2">
+                        ${q.options.map(opt => `
+                            <label class="flex items-center">
+                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function loadIFPEQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            // Questões do IFPE
+            const questions = [
+                {
+                    question: 'O professor Valter passou um trabalho com uma enorme quantidade de questões para serem resolvidas. Os alunos perceberam que, se 4 colegas trabalharem 2 horas por dia, eles conseguirão acabar a atividade em um prazo de 6 dias. Se, contudo, o prazo for de, apenas, 2 dias, e um dos colegas ficar doente, não podendo mais ajudar, quantas horas por dia os outros 3 amigos terão que trabalhar para concluir o trabalho no prazo?',
+                    options: [
+                        'a. 8h',
+                        'b. 9h',
+                        'c. 6h',
+                        'd. 5h',
+                        'e. 4h'
+                    ],
+                    correct: 'a'
+                },
+                {
+                    question: 'Devido ao reajuste de preços dos fornecedores, o dono de uma loja aumentou os valores de todos os produtos em 20%. Percebendo uma grande queda nas vendas, decidiu dar um desconto de 20% sobre o valor aumentado inicialmente. Com isso, o preço final de venda corresponde:',
+                    options: [
+                        'a. ao valor do preço original reduzido em 2%',
+                        'b. ao valor do preço original',
+                        'c. ao valor do preço original aumentado em 4%',
+                        'd. ao valor do preço original reduzido em 4%',
+                        'e. ao valor do preço original aumentado em 2%'
+                    ],
+                    correct: 'd'
+                },
+                {
+                    question: 'A partir da leitura do texto sobre o hand spinner, podemos compreender que:',
+                    options: [
+                        'a. o Dr. Jairo Werner, professor da UFF, chama a atenção para o perigo da automedicação e se coloca totalmente contra o uso do hand spinner.',
+                        'b. o vocábulo "viralizou", que aparece no terceiro parágrafo, foi utilizado para indicar o perigo representado pelo hand spinner, semelhante ao de um vírus.',
+                        'c. o professor da UFF, Jairo Werner, desconhece estudos sobre a eficácia do hand spinner, mas recomenda que o brinquedo seja usado para crianças com TDAH e autismo.',
+                        'd. o texto defende que, a exemplo do que ocorreu no Colégio Santo Inácio, o hand spinner deve ser proibido em todas as escolas.',
+                        'e. Jairo Werner, especialista em psiquiatria infantil, embora concorde que o hand spinner forneça alívio dos sintomas da ansiedade, defende que seu uso seja feito com parcimônia.'
+                    ],
+                    correct: 'e'
+                }
+            ];
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
+                questionDiv.innerHTML = `
+                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
+                    <div class="space-y-2">
+                        ${q.options.map(opt => `
+                            <label class="flex items-center">
+                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
     </script>
 </body>
 </html>
