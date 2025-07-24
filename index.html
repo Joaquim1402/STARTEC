@@ -65,6 +65,48 @@
             justify-content: center;
             align-items: center;
         }
+        
+        /* Estilos para o modal de resultados */
+        .correct-answer {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+        
+        .wrong-answer {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .skipped-question {
+            background-color: #e5e7eb;
+            border-left: 4px solid #9ca3af;
+        }
+        
+        /* Estilo para opções selecionadas */
+        .option-selected {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+        }
+        
+        /* Estilo para scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -194,7 +236,7 @@
         </div>
 
         <!-- Tab Contents -->
-        <!-- Simulados & Atividades Tab (Atualizado) -->
+        <!-- Simulados & Atividades Tab -->
         <div id="simulados" class="tab-content active">
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                 <div class="p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
@@ -406,7 +448,7 @@
             </div>
         </div>
 
-        <!-- Vídeo Aulas Tab (Atualizado) -->
+        <!-- Vídeo Aulas Tab -->
         <div id="videos" class="tab-content">
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                 <div class="p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
@@ -588,7 +630,7 @@
             </div>
         </div>
         
-        <!-- Recompensas (Atualizado) -->
+        <!-- Recompensas -->
         <div id="incentivo" class="tab-content">
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                 <div class="p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
@@ -796,7 +838,7 @@
             </div>
         </div>
 
-        <!-- IA de Dificuldades (Atualizado) -->
+        <!-- IA de Dificuldades -->
         <div id="ia" class="tab-content">
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                 <div class="p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
@@ -1019,7 +1061,7 @@
             </div>
         </div>
 
-        <!-- Trilha de Assuntos (Atualizado) -->
+        <!-- Trilha de Assuntos -->
         <div id="trilha" class="tab-content">
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                 <div class="p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
@@ -1280,286 +1322,616 @@
 
     <!-- Modal para Simulados -->
     <div id="testModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
-            <div class="flex justify-between items-center mb-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 sticky top-0 bg-white py-2">
                 <h3 class="text-xl font-bold" id="modalTitle">Simulado ETE - Completo</h3>
                 <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
+            
             <div class="mb-4">
                 <p id="modalDescription">Prova completa no formato das Escolas Técnicas Estaduais</p>
+                <div class="flex justify-between items-center mt-2">
+                    <span class="text-sm text-gray-600"><i class="fas fa-question-circle mr-1"></i> <span id="totalQuestions">0</span> questões</span>
+                    <span id="timer" class="font-medium bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Tempo: 60:00</span>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" id="questionsContainer">
+            
+            <div class="mb-6" id="questionsContainer">
                 <!-- Questões serão inseridas aqui dinamicamente -->
             </div>
-            <div class="flex justify-between items-center">
-                <span id="timer" class="font-medium">Tempo restante: 60:00</span>
-                <button onclick="submitTest()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium">Enviar Respostas</button>
+            
+            <div class="flex justify-between items-center sticky bottom-0 bg-white py-4 border-t border-gray-200">
+                <button onclick="previousQuestion()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full text-sm font-medium hidden" id="prevButton">
+                    <i class="fas fa-arrow-left mr-1"></i> Anterior
+                </button>
+                <span class="text-sm text-gray-600" id="questionCounter">Questão 1 de 10</span>
+                <button onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium" id="nextButton">
+                    Próxima <i class="fas fa-arrow-right ml-1"></i>
+                </button>
+                <button onclick="submitTest()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-medium hidden" id="submitButton">
+                    <i class="fas fa-check-circle mr-1"></i> Finalizar Simulado
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Resultados -->
+    <div id="resultsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Resultado do Simulado</h3>
+                <button onclick="closeResultsModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+                    <div class="text-4xl font-bold text-blue-600 mb-2" id="correctAnswers">0</div>
+                    <p class="text-blue-800 font-medium">Acertos</p>
+                </div>
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+                    <div class="text-4xl font-bold text-yellow-600 mb-2" id="wrongAnswers">0</div>
+                    <p class="text-yellow-800 font-medium">Erros</p>
+                </div>
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+                    <div class="text-4xl font-bold text-green-600 mb-2" id="scorePercentage">0%</div>
+                    <p class="text-green-800 font-medium">Desempenho</p>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-lg font-bold mb-3">Seu desempenho por matéria:</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center mb-2">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3 icon-center">
+                                <i class="fas fa-square-root-alt text-blue-600"></i>
+                            </div>
+                            <h5 class="font-medium">Matemática</h5>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600"><span id="mathCorrect">0</span>/<span id="mathTotal">0</span> acertos</span>
+                            <span class="text-sm font-medium" id="mathPercentage">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-blue-600 h-2 rounded-full" id="mathProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center mb-2">
+                            <div class="bg-green-100 p-2 rounded-full mr-3 icon-center">
+                                <i class="fas fa-book text-green-600"></i>
+                            </div>
+                            <h5 class="font-medium">Português</h5>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600"><span id="portCorrect">0</span>/<span id="portTotal">0</span> acertos</span>
+                            <span class="text-sm font-medium" id="portPercentage">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-green-600 h-2 rounded-full" id="portProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-lg font-bold mb-3">Gabarito</h4>
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
+                    <h5 class="font-medium mb-2">📘 Português ETE</h5>
+                    <div class="grid grid-cols-5 gap-2 text-sm">
+                        <div class="text-center">1. e</div>
+                        <div class="text-center">2. a</div>
+                        <div class="text-center">3. b</div>
+                        <div class="text-center">4. c</div>
+                        <div class="text-center">5. d</div>
+                        <div class="text-center">6. c</div>
+                        <div class="text-center">7. e</div>
+                        <div class="text-center">8. c</div>
+                        <div class="text-center">9. c</div>
+                        <div class="text-center">10. a</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <h5 class="font-medium mb-2">🧮 Matemática ETE</h5>
+                    <div class="grid grid-cols-5 gap-2 text-sm">
+                        <div class="text-center">1. c</div>
+                        <div class="text-center">2. b</div>
+                        <div class="text-center">3. e</div>
+                        <div class="text-center">4. d</div>
+                        <div class="text-center">5. d</div>
+                        <div class="text-center">6. b</div>
+                        <div class="text-center">7. a</div>
+                        <div class="text-center">8. b</div>
+                        <div class="text-center">9. b</div>
+                        <div class="text-center">10. c</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-lg font-bold mb-3">Detalhes das Respostas</h4>
+                <div class="space-y-3" id="answersDetails">
+                    <!-- Respostas serão inseridas aqui dinamicamente -->
+                </div>
+            </div>
+            
+            <div class="flex justify-center">
+                <button onclick="closeResultsModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-medium">
+                    <i class="fas fa-check-circle mr-1"></i> Entendi
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        function openTab(evt, tabName) {
-            // Hide all tab contents
-            const tabContents = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove("active");
-            }
-            
-            // Remove active class from all tab buttons
-            const tabButtons = document.getElementsByClassName("tab-button");
-            for (let i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("bg-blue-600", "text-white");
-                tabButtons[i].classList.add("bg-white", "text-blue-600", "border");
-            }
-            
-            // Show the current tab and add active class to the button
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.remove("bg-white", "text-blue-600", "border");
-            evt.currentTarget.classList.add("bg-blue-600", "text-white");
-        }
+        // Variáveis globais para controle do simulado
+        let currentTest = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let timerInterval = null;
+        let timeLeft = 0;
         
-        // Initialize first tab as active
-        document.addEventListener("DOMContentLoaded", function() {
-            const firstTabButton = document.querySelector(".tab-button");
-            if (firstTabButton) {
-                firstTabButton.classList.remove("bg-white", "text-blue-600", "border");
-                firstTabButton.classList.add("bg-blue-600", "text-white");
-            }
-        });
-
-        function openSubject(subject) {
-            alert(`Abrindo a pasta de ${subject}`);
-            // Aqui você pode implementar a lógica para carregar os conteúdos do assunto selecionado
-        }
-
-        // Funções para o modal de simulados
+        // Função para abrir o modal do simulado
         function startTest(testType) {
+            currentTest = testType;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            
             const modal = document.getElementById('testModal');
             const title = document.getElementById('modalTitle');
             const description = document.getElementById('modalDescription');
             const questionsContainer = document.getElementById('questionsContainer');
+            const totalQuestions = document.getElementById('totalQuestions');
             
             // Definir título e descrição com base no tipo de teste
             switch(testType) {
                 case 'ete-completo':
                     title.textContent = 'Simulado ETE - Completo';
                     description.textContent = 'Prova completa no formato das Escolas Técnicas Estaduais';
+                    timeLeft = 60 * 60; // 60 minutos em segundos
                     loadETEQuestions();
+                    totalQuestions.textContent = '20';
                     break;
                 case 'ete-portugues':
                     title.textContent = 'Simulado ETE - Português';
                     description.textContent = 'Prova de Português no formato ETE';
+                    timeLeft = 30 * 60; // 30 minutos em segundos
                     loadETEPortuguesQuestions();
+                    totalQuestions.textContent = '10';
                     break;
                 case 'ete-matematica':
                     title.textContent = 'Simulado ETE - Matemática';
                     description.textContent = 'Prova de Matemática no formato ETE';
+                    timeLeft = 30 * 60; // 30 minutos em segundos
                     loadETEMatematicaQuestions();
+                    totalQuestions.textContent = '10';
                     break;
                 case 'equacoes':
                     title.textContent = 'Atividade: Equações';
                     description.textContent = 'Exercícios específicos sobre equações de 1º grau';
+                    timeLeft = 30 * 60; // 30 minutos em segundos
                     loadEquacoesQuestions();
+                    totalQuestions.textContent = '10';
                     break;
                 case 'concordancia':
                     title.textContent = 'Atividade: Concordância';
                     description.textContent = 'Exercícios sobre concordância verbal e nominal';
+                    timeLeft = 30 * 60; // 30 minutos em segundos
                     loadConcordanciaQuestions();
+                    totalQuestions.textContent = '10';
                     break;
                 case 'ifpe-completo':
                     title.textContent = 'Simulado IFPE - Completo';
                     description.textContent = 'Teste rápido de conhecimentos em Matemática e Português';
+                    timeLeft = 90 * 60; // 90 minutos em segundos
                     loadIFPEQuestions();
+                    totalQuestions.textContent = '30';
                     break;
             }
             
             modal.classList.remove('hidden');
-            startTimer(60); // 60 minutos para o simulado
+            startTimer();
+            updateQuestionCounter();
+            updateNavButtons();
         }
-
+        
         function closeModal() {
+            // Parar o timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
             document.getElementById('testModal').classList.add('hidden');
         }
-
-        function submitTest() {
-            alert('Respostas enviadas com sucesso!');
-            closeModal();
-            // Aqui você pode implementar a lógica para calcular a pontuação e mostrar os resultados
+        
+        function closeResultsModal() {
+            document.getElementById('resultsModal').classList.add('hidden');
         }
-
-        function startTimer(minutes) {
-            let seconds = minutes * 60;
+        
+        function startTimer() {
+            // Parar qualquer timer existente
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
             const timerElement = document.getElementById('timer');
             
-            const timer = setInterval(() => {
-                seconds--;
-                if (seconds < 0) {
-                    clearInterval(timer);
-                    submitTest();
-                    return;
-                }
+            // Atualizar o timer imediatamente
+            updateTimerDisplay(timerElement);
+            
+            // Iniciar o intervalo de atualização
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay(timerElement);
                 
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                timerElement.textContent = `Tempo restante: ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
             }, 1000);
         }
-
-        // Funções para carregar questões específicas
+        
+        function updateTimerDisplay(timerElement) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `Tempo: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Mudar cor quando o tempo estiver acabando
+            if (timeLeft <= 300) { // 5 minutos
+                timerElement.classList.remove('bg-blue-100', 'text-blue-800');
+                timerElement.classList.add('bg-red-100', 'text-red-800');
+            }
+        }
+        
+        function updateQuestionCounter() {
+            const counterElement = document.getElementById('questionCounter');
+            const total = document.getElementById('totalQuestions').textContent;
+            counterElement.textContent = `Questão ${currentQuestionIndex + 1} de ${total}`;
+        }
+        
+        function updateNavButtons() {
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            const submitButton = document.getElementById('submitButton');
+            const total = parseInt(document.getElementById('totalQuestions').textContent);
+            
+            // Mostrar/ocultar botão Anterior
+            if (currentQuestionIndex === 0) {
+                prevButton.classList.add('hidden');
+            } else {
+                prevButton.classList.remove('hidden');
+            }
+            
+            // Mostrar/ocultar botões Próxima e Finalizar
+            if (currentQuestionIndex === total - 1) {
+                nextButton.classList.add('hidden');
+                submitButton.classList.remove('hidden');
+            } else {
+                nextButton.classList.remove('hidden');
+                submitButton.classList.add('hidden');
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+                updateQuestionCounter();
+                updateNavButtons();
+            }
+        }
+        
+        function nextQuestion() {
+            saveCurrentAnswer();
+            
+            const total = parseInt(document.getElementById('totalQuestions').textContent);
+            if (currentQuestionIndex < total - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+                updateQuestionCounter();
+                updateNavButtons();
+            }
+        }
+        
+        function saveCurrentAnswer() {
+            const questionDiv = document.querySelector(`#questionsContainer > div[data-index="${currentQuestionIndex}"]`);
+            if (!questionDiv) return;
+            
+            const selectedOption = questionDiv.querySelector('input[type="radio"]:checked');
+            userAnswers[currentQuestionIndex] = selectedOption ? selectedOption.value : null;
+        }
+        
+        function showQuestion(index) {
+            // Esconder todas as questões
+            const questions = document.querySelectorAll('#questionsContainer > div');
+            questions.forEach(q => q.classList.add('hidden'));
+            
+            // Mostrar a questão atual
+            const currentQuestion = document.querySelector(`#questionsContainer > div[data-index="${index}"]`);
+            if (currentQuestion) {
+                currentQuestion.classList.remove('hidden');
+                
+                // Marcar a resposta selecionada anteriormente, se houver
+                if (userAnswers[index]) {
+                    const radio = currentQuestion.querySelector(`input[type="radio"][value="${userAnswers[index]}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        // Adicionar classe de destaque para a opção selecionada
+                        const label = radio.closest('label');
+                        if (label) {
+                            label.classList.add('option-selected');
+                        }
+                    }
+                }
+            }
+        }
+        
+        function submitTest() {
+            // Parar o timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
+            // Salvar a resposta da última questão
+            saveCurrentAnswer();
+            
+            // Fechar o modal do simulado
+            closeModal();
+            
+            // Calcular resultados
+            calculateResults();
+            
+            // Mostrar o modal de resultados
+            document.getElementById('resultsModal').classList.remove('hidden');
+        }
+        
+        function calculateResults() {
+            const questions = getQuestionsForCurrentTest();
+            let correctCount = 0;
+            let wrongCount = 0;
+            let mathCorrect = 0;
+            let mathTotal = 0;
+            let portCorrect = 0;
+            let portTotal = 0;
+            
+            // Elementos do modal de resultados
+            const correctAnswersElement = document.getElementById('correctAnswers');
+            const wrongAnswersElement = document.getElementById('wrongAnswers');
+            const scorePercentageElement = document.getElementById('scorePercentage');
+            const mathCorrectElement = document.getElementById('mathCorrect');
+            const mathTotalElement = document.getElementById('mathTotal');
+            const mathPercentageElement = document.getElementById('mathPercentage');
+            const mathProgressElement = document.getElementById('mathProgress');
+            const portCorrectElement = document.getElementById('portCorrect');
+            const portTotalElement = document.getElementById('portTotal');
+            const portPercentageElement = document.getElementById('portPercentage');
+            const portProgressElement = document.getElementById('portProgress');
+            const answersDetailsElement = document.getElementById('answersDetails');
+            
+            // Limpar detalhes anteriores
+            answersDetailsElement.innerHTML = '';
+            
+            // Calcular acertos e erros
+            questions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.correct;
+                
+                if (isCorrect) {
+                    correctCount++;
+                    
+                    // Contar por matéria
+                    if (q.subject === 'math') {
+                        mathCorrect++;
+                        mathTotal++;
+                    } else if (q.subject === 'portuguese') {
+                        portCorrect++;
+                        portTotal++;
+                    }
+                } else if (userAnswer !== undefined && userAnswer !== null) {
+                    wrongCount++;
+                    
+                    // Contar por matéria
+                    if (q.subject === 'math') {
+                        mathTotal++;
+                    } else if (q.subject === 'portuguese') {
+                        portTotal++;
+                    }
+                } else {
+                    // Questão não respondida
+                    if (q.subject === 'math') {
+                        mathTotal++;
+                    } else if (q.subject === 'portuguese') {
+                        portTotal++;
+                    }
+                }
+                
+                // Adicionar detalhe da resposta
+                const answerDetail = document.createElement('div');
+                answerDetail.className = `p-3 rounded-lg ${isCorrect ? 'correct-answer' : (userAnswer ? 'wrong-answer' : 'skipped-question')}`;
+                
+                answerDetail.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h5 class="font-medium">Questão ${index + 1}</h5>
+                            <p class="text-sm">${q.question}</p>
+                        </div>
+                        <div class="ml-4 text-right">
+                            ${isCorrect ? 
+                                '<span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Acertou</span>' : 
+                                (userAnswer ? 
+                                    '<span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">Errou</span>' : 
+                                    '<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs">Não respondeu</span>')}
+                        </div>
+                    </div>
+                    ${!isCorrect ? `
+                    <div class="mt-2 text-sm">
+                        <p><span class="font-medium">Sua resposta:</span> ${userAnswer ? userAnswer.toUpperCase() : '---'}</p>
+                        <p><span class="font-medium">Resposta correta:</span> ${q.correct.toUpperCase()}</p>
+                    </div>
+                    ` : ''}
+                `;
+                
+                answersDetailsElement.appendChild(answerDetail);
+            });
+            
+            // Atualizar estatísticas
+            correctAnswersElement.textContent = correctCount;
+            wrongAnswersElement.textContent = wrongCount;
+            
+            const totalQuestions = questions.length;
+            const scorePercentage = Math.round((correctCount / totalQuestions) * 100);
+            scorePercentageElement.textContent = `${scorePercentage}%`;
+            
+            // Atualizar estatísticas por matéria
+            mathCorrectElement.textContent = mathCorrect;
+            mathTotalElement.textContent = mathTotal;
+            const mathPercentage = mathTotal > 0 ? Math.round((mathCorrect / mathTotal) * 100) : 0;
+            mathPercentageElement.textContent = `${mathPercentage}%`;
+            mathProgressElement.style.width = `${mathPercentage}%`;
+            
+            portCorrectElement.textContent = portCorrect;
+            portTotalElement.textContent = portTotal;
+            const portPercentage = portTotal > 0 ? Math.round((portCorrect / portTotal) * 100) : 0;
+            portPercentageElement.textContent = `${portPercentage}%`;
+            portProgressElement.style.width = `${portPercentage}%`;
+        }
+        
+        function getQuestionsForCurrentTest() {
+            switch(currentTest) {
+                case 'ete-completo':
+                    return [...getETEMathQuestions(), ...getETEPortugueseQuestions()];
+                case 'ete-portugues':
+                    return getETEPortugueseQuestions();
+                case 'ete-matematica':
+                    return getETEMathQuestions();
+                case 'equacoes':
+                    return getEquacoesQuestions();
+                case 'concordancia':
+                    return getConcordanciaQuestions();
+                case 'ifpe-completo':
+                    return getIFPEQuestions();
+                default:
+                    return [];
+            }
+        }
+        
+        // Funções para carregar questões
         function loadETEQuestions() {
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
             
-            // Questões de Matemática - ETE
-            const mathQuestions = [
-                {
-                    question: 'Marque a alternativa que indica a área do retângulo da figura com dimensões (6 + √7) e (4 - √7)',
-                    options: [
-                        'a. 15 - 2√7',
-                        'b. 16 - 2√7',
-                        'c. 17 - 2√7',
-                        'd. 18 - 2√7',
-                        'e. 19 - 2√7'
-                    ],
-                    correct: 'c'
-                },
-                {
-                    question: 'Na sala de aula, 30% dos alunos torcem para o Santa Cruz. Sabendo que existem 40 alunos na sala, quantos torcem para o Santa Cruz?',
-                    options: [
-                        'a. 8',
-                        'b. 12',
-                        'c. 16',
-                        'd. 20',
-                        'e. 24'
-                    ],
-                    correct: 'b'
-                },
-                {
-                    question: 'Numa vila há 8 ruas, em cada rua há 8 casas, em cada casa moram 8 pessoas. Quantas pessoas moram nessa vila?',
-                    options: [
-                        'a. 24',
-                        'b. 72',
-                        'c. 125',
-                        'd. 215',
-                        'e. 512'
-                    ],
-                    correct: 'e'
-                }
-            ];
-            
-            // Questões de Português - ETE
-            const portugueseQuestions = [
-                {
-                    question: 'Ao usar a expressão "homem-poste", o autor sugere que o homem está',
-                    options: [
-                        'a. preocupado com a vida',
-                        'b. observando o movimento',
-                        'c. extremamente atento',
-                        'd. cansado de esperar o trem',
-                        'e. desligado da realidade'
-                    ],
-                    correct: 'e'
-                },
-                {
-                    question: 'No primeiro quadro, na fala da professora, há a ocorrência de:',
-                    options: [
-                        'a. prosopopeia',
-                        'b. aliteração',
-                        'c. catacrese',
-                        'd. metáfora',
-                        'e. ironia'
-                    ],
-                    correct: 'b'
-                }
-            ];
-            
-            // Adicionar todas as questões ao container
-            [...mathQuestions, ...portugueseQuestions].forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
-                questionDiv.innerHTML = `
-                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
-                    <div class="space-y-2">
-                        ${q.options.map(opt => `
-                            <label class="flex items-center">
-                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
-                                ${opt}
-                            </label>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(questionDiv);
+            // Adicionar questões de Matemática
+            getETEMathQuestions().forEach((q, index) => {
+                addQuestionToContainer(container, q, index, 'math');
             });
+            
+            // Adicionar questões de Português
+            getETEPortugueseQuestions().forEach((q, index) => {
+                addQuestionToContainer(container, q, index + 10, 'portuguese'); // +10 porque são 10 questões de matemática primeiro
+            });
+            
+            // Mostrar a primeira questão
+            showQuestion(0);
         }
-
+        
         function loadETEPortuguesQuestions() {
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
             
-            // Questões de Português - ETE
-            const questions = [
-                {
-                    question: 'Ao usar a expressão "homem-poste", o autor sugere que o homem está',
-                    options: [
-                        'a. preocupado com a vida',
-                        'b. observando o movimento',
-                        'c. extremamente atento',
-                        'd. cansado de esperar o trem',
-                        'e. desligado da realidade'
-                    ],
-                    correct: 'e'
-                },
-                {
-                    question: 'No primeiro quadro, na fala da professora, há a ocorrência de:',
-                    options: [
-                        'a. prosopopeia',
-                        'b. aliteração',
-                        'c. catacrese',
-                        'd. metáfora',
-                        'e. ironia'
-                    ],
-                    correct: 'b'
-                },
-                {
-                    question: 'A palavra "comodidade" é formada pelo processo de sufixação, assim como:',
-                    options: [
-                        'a. infeliz, casa',
-                        'b. paz, ciência',
-                        'c. comumente, baronesa',
-                        'd. encanto, ideia',
-                        'e. água, boiada'
-                    ],
-                    correct: 'c'
-                }
-            ];
-            
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
-                questionDiv.innerHTML = `
-                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
-                    <div class="space-y-2">
-                        ${q.options.map(opt => `
-                            <label class="flex items-center">
-                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
-                                ${opt}
-                            </label>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(questionDiv);
+            getETEPortugueseQuestions().forEach((q, index) => {
+                addQuestionToContainer(container, q, index, 'portuguese');
             });
+            
+            showQuestion(0);
         }
-
+        
         function loadETEMatematicaQuestions() {
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
             
-            // Questões de Matemática - ETE
-            const questions = [
+            getETEMathQuestions().forEach((q, index) => {
+                addQuestionToContainer(container, q, index, 'math');
+            });
+            
+            showQuestion(0);
+        }
+        
+        function loadEquacoesQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            getEquacoesQuestions().forEach((q, index) => {
+                addQuestionToContainer(container, q, index, 'math');
+            });
+            
+            showQuestion(0);
+        }
+        
+        function loadConcordanciaQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            getConcordanciaQuestions().forEach((q, index) => {
+                addQuestionToContainer(container, q, index, 'portuguese');
+            });
+            
+            showQuestion(0);
+        }
+        
+        function loadIFPEQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            getIFPEQuestions().forEach((q, index) => {
+                addQuestionToContainer(container, q, index, q.subject);
+            });
+            
+            showQuestion(0);
+        }
+        
+        function addQuestionToContainer(container, q, index, subject) {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = `bg-gray-50 p-6 rounded-lg mb-4 ${index !== 0 ? 'hidden' : ''}`;
+            questionDiv.dataset.index = index;
+            questionDiv.dataset.subject = subject;
+            
+            questionDiv.innerHTML = `
+                <h4 class="font-medium mb-4">${index + 1}. ${q.question}</h4>
+                <div class="space-y-3">
+                    ${q.options.map(opt => `
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 cursor-pointer">
+                            <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-3 h-5 w-5">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Adicionar evento para destacar a opção selecionada
+            const radioInputs = questionDiv.querySelectorAll('input[type="radio"]');
+            radioInputs.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const labels = questionDiv.querySelectorAll('label');
+                    labels.forEach(label => label.classList.remove('option-selected'));
+                    
+                    if (this.checked) {
+                        this.closest('label').classList.add('option-selected');
+                    }
+                });
+            });
+            
+            container.appendChild(questionDiv);
+        }
+        
+        // Funções que retornam as questões
+        function getETEMathQuestions() {
+            return [
                 {
                     question: 'Marque a alternativa que indica a área do retângulo da figura com dimensões (6 + √7) e (4 - √7)',
                     options: [
@@ -1569,7 +1941,8 @@
                         'd. 18 - 2√7',
                         'e. 19 - 2√7'
                     ],
-                    correct: 'c'
+                    correct: 'c',
+                    subject: 'math'
                 },
                 {
                     question: 'Na sala de aula, 30% dos alunos torcem para o Santa Cruz. Sabendo que existem 40 alunos na sala, quantos torcem para o Santa Cruz?',
@@ -1580,7 +1953,8 @@
                         'd. 20',
                         'e. 24'
                     ],
-                    correct: 'b'
+                    correct: 'b',
+                    subject: 'math'
                 },
                 {
                     question: 'Numa vila há 8 ruas, em cada rua há 8 casas, em cada casa moram 8 pessoas. Quantas pessoas moram nessa vila?',
@@ -1591,7 +1965,8 @@
                         'd. 215',
                         'e. 512'
                     ],
-                    correct: 'e'
+                    correct: 'e',
+                    subject: 'math'
                 },
                 {
                     question: 'O Homem-Escorpião, o Menino-Vespa e a Garota-Abelha já derrotaram, juntos, 600 vilões na proporção 13, 2 e 5, respectivamente. Quantos vilões o Homem-Escorpião derrotou a mais que o Menino-Vespa?',
@@ -1602,82 +1977,122 @@
                         'd. 330 vilões',
                         'e. 360 vilões'
                     ],
-                    correct: 'd'
-                }
-            ];
-            
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
-                questionDiv.innerHTML = `
-                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
-                    <div class="space-y-2">
-                        ${q.options.map(opt => `
-                            <label class="flex items-center">
-                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
-                                ${opt}
-                            </label>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(questionDiv);
-            });
-        }
-
-        function loadEquacoesQuestions() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
-            
-            // Questões de Equações
-            const questions = [
-                {
-                    question: 'Jorge gastou 30% do seu salário com mensalidade escolar, 25% com aluguel e 10% com alimentação e ainda ficou com R$ 509,60. Qual o valor do salário de Jorge?',
-                    options: [
-                        'a. R$ 1.146,00',
-                        'b. R$ 1.268,00',
-                        'c. R$ 1.324,00',
-                        'd. R$ 1.456,00',
-                        'e. R$ 1.689,00'
-                    ],
-                    correct: 'd'
+                    correct: 'd',
+                    subject: 'math'
                 },
                 {
-                    question: 'Uma casa foi projetada em formato retangular com as seguintes medidas: 10m de comprimento por 20m de largura. O proprietário pediu que a área da casa fosse aumentada em 25m². Jorge decidiu diminuir x metros na largura e aumentar x metros no comprimento, de modo a não alterar o perímetro. Qual o valor de x?',
+                    question: 'Qual é o valor de x na equação 3x + 5 = 20?',
                     options: [
-                        'a. 6,0m',
-                        'b. 4,5m',
-                        'c. 3,5m',
-                        'd. 5,5m',
-                        'e. 5,0m'
+                        'a. 3',
+                        'b. 4',
+                        'c. 5',
+                        'd. 6',
+                        'e. 7'
                     ],
-                    correct: 'e'
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é a área de um quadrado com lado medindo 5 cm?',
+                    options: [
+                        'a. 10 cm²',
+                        'b. 15 cm²',
+                        'c. 20 cm²',
+                        'd. 25 cm²',
+                        'e. 30 cm²'
+                    ],
+                    correct: 'd',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é o resultado de 7² + 3³?',
+                    options: [
+                        'a. 49',
+                        'b. 58',
+                        'c. 76',
+                        'd. 85',
+                        'e. 94'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Se um triângulo tem lados medindo 3 cm, 4 cm e 5 cm, ele é:',
+                    options: [
+                        'a. Equilátero',
+                        'b. Isósceles',
+                        'c. Escaleno',
+                        'd. Retângulo',
+                        'e. Obtusângulo'
+                    ],
+                    correct: 'd',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é o MMC (Mínimo Múltiplo Comum) de 6 e 8?',
+                    options: [
+                        'a. 12',
+                        'b. 16',
+                        'c. 24',
+                        'd. 32',
+                        'e. 48'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é o MDC (Máximo Divisor Comum) de 18 e 24?',
+                    options: [
+                        'a. 3',
+                        'b. 6',
+                        'c. 9',
+                        'd. 12',
+                        'e. 18'
+                    ],
+                    correct: 'b',
+                    subject: 'math'
                 }
             ];
-            
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
-                questionDiv.innerHTML = `
-                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
-                    <div class="space-y-2">
-                        ${q.options.map(opt => `
-                            <label class="flex items-center">
-                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
-                                ${opt}
-                            </label>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(questionDiv);
-            });
         }
-
-        function loadConcordanciaQuestions() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
-            
-            // Questões de Concordância
-            const questions = [
+        
+        function getETEPortugueseQuestions() {
+            return [
+                {
+                    question: 'Ao usar a expressão "homem-poste", o autor sugere que o homem está',
+                    options: [
+                        'a. preocupado com a vida',
+                        'b. observando o movimento',
+                        'c. extremamente atento',
+                        'd. cansado de esperar o trem',
+                        'e. desligado da realidade'
+                    ],
+                    correct: 'e',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'No primeiro quadro, na fala da professora, há a ocorrência de:',
+                    options: [
+                        'a. prosopopeia',
+                        'b. aliteração',
+                        'c. catacrese',
+                        'd. metáfora',
+                        'e. ironia'
+                    ],
+                    correct: 'b',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'A palavra "comodidade" é formada pelo processo de sufixação, assim como:',
+                    options: [
+                        'a. infeliz, casa',
+                        'b. paz, ciência',
+                        'c. comumente, baronesa',
+                        'd. encanto, ideia',
+                        'e. água, boiada'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
                 {
                     question: 'No trecho: "O engenheiro e a médica saíram rapidamente. Seu filho permaneceu no local", ocorre:',
                     options: [
@@ -1687,7 +2102,8 @@
                         'd. metonímia',
                         'e. ambiguidade'
                     ],
-                    correct: 'e'
+                    correct: 'e',
+                    subject: 'portuguese'
                 },
                 {
                     question: 'Marque a alternativa correta quanto à regência:',
@@ -1698,34 +2114,324 @@
                         'd. Trouxe consigo as pessoas das quais confiava.',
                         'e. Trouxe consigo as pessoas da qual confiava.'
                     ],
-                    correct: 'c'
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Assinale a alternativa em que todas as palavras estão grafadas corretamente:',
+                    options: [
+                        'a. excessão, ratificar, intercessão',
+                        'b. exceção, ratificar, intercessão',
+                        'c. excessão, retificar, intersessão',
+                        'd. exceção, retificar, intercessão',
+                        'e. exceção, ratificar, intersessão'
+                    ],
+                    correct: 'b',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual das alternativas apresenta apenas palavras oxítonas?',
+                    options: [
+                        'a. café, difícil, táxi',
+                        'b. parabéns, júnior, você',
+                        'c. cipó, saci, urubu',
+                        'd. álbum, tórax, fóssil',
+                        'e. lápis, ônibus, fênix'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Assinale a alternativa em que a concordância verbal está INCORRETA:',
+                    options: [
+                        'a. Faz dois anos que não o vejo.',
+                        'b. Deve haver muitos candidatos.',
+                        'c. É preciso que se faça silêncio.',
+                        'd. Haja vista os problemas ocorridos.',
+                        'e. Fazem dois anos que não o vejo.'
+                    ],
+                    correct: 'e',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual das alternativas apresenta erro de ortografia?',
+                    options: [
+                        'a. A sessão de cinema foi emocionante.',
+                        'b. O cerimonial foi impecável.',
+                        'c. Ele fez uma seção de fotos incríveis.',
+                        'd. A cessão de direitos foi assinada.',
+                        'e. O time fez uma cessão de gols impressionante.'
+                    ],
+                    correct: 'e',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual das alternativas apresenta um exemplo de metáfora?',
+                    options: [
+                        'a. Seus olhos brilhavam como estrelas.',
+                        'b. O tempo é um rio que corre sem parar.',
+                        'c. O vento uivava como um lobo na noite.',
+                        'd. Ela é tão doce quanto um mel.',
+                        'e. Ele é forte como um touro.'
+                    ],
+                    correct: 'b',
+                    subject: 'portuguese'
                 }
             ];
-            
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
-                questionDiv.innerHTML = `
-                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
-                    <div class="space-y-2">
-                        ${q.options.map(opt => `
-                            <label class="flex items-center">
-                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
-                                ${opt}
-                            </label>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(questionDiv);
-            });
         }
-
-        function loadIFPEQuestions() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
-            
-            // Questões do IFPE
-            const questions = [
+        
+        function getEquacoesQuestions() {
+            return [
+                {
+                    question: 'Jorge gastou 30% do seu salário com mensalidade escolar, 25% com aluguel e 10% com alimentação e ainda ficou com R$ 509,60. Qual o valor do salário de Jorge?',
+                    options: [
+                        'a. R$ 1.146,00',
+                        'b. R$ 1.268,00',
+                        'c. R$ 1.324,00',
+                        'd. R$ 1.456,00',
+                        'e. R$ 1.689,00'
+                    ],
+                    correct: 'd',
+                    subject: 'math'
+                },
+                {
+                    question: 'Uma casa foi projetada em formato retangular com as seguintes medidas: 10m de comprimento por 20m de largura. O proprietário pediu que a área da casa fosse aumentada em 25m². Jorge decidiu diminuir x metros na largura e aumentar x metros no comprimento, de modo a não alterar o perímetro. Qual o valor de x?',
+                    options: [
+                        'a. 6,0m',
+                        'b. 4,5m',
+                        'c. 3,5m',
+                        'd. 5,5m',
+                        'e. 5,0m'
+                    ],
+                    correct: 'e',
+                    subject: 'math'
+                },
+                {
+                    question: 'Resolva a equação: 2x + 5 = 17',
+                    options: [
+                        'a. 4',
+                        'b. 5',
+                        'c. 6',
+                        'd. 7',
+                        'e. 8'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é o valor de x na equação 3(x - 4) = 15?',
+                    options: [
+                        'a. 5',
+                        'b. 7',
+                        'c. 9',
+                        'd. 11',
+                        'e. 13'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Resolva o sistema de equações: x + y = 10 e x - y = 4',
+                    options: [
+                        'a. x=7, y=3',
+                        'b. x=6, y=4',
+                        'c. x=8, y=2',
+                        'd. x=5, y=5',
+                        'e. x=9, y=1'
+                    ],
+                    correct: 'a',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é a solução da equação 2x² - 8 = 0?',
+                    options: [
+                        'a. x = 2',
+                        'b. x = -2',
+                        'c. x = 2 e x = -2',
+                        'd. x = 4',
+                        'e. x = -4'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é o valor de x na proporção 3/5 = x/20?',
+                    options: [
+                        'a. 8',
+                        'b. 10',
+                        'c. 12',
+                        'd. 15',
+                        'e. 18'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Resolva a equação: 4(x + 3) = 2(x - 1)',
+                    options: [
+                        'a. -7',
+                        'b. -5',
+                        'c. 5',
+                        'd. 7',
+                        'e. 9'
+                    ],
+                    correct: 'a',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é a solução da equação x² - 5x + 6 = 0?',
+                    options: [
+                        'a. x = 2 e x = 3',
+                        'b. x = -2 e x = -3',
+                        'c. x = 1 e x = 6',
+                        'd. x = -1 e x = -6',
+                        'e. x = 0 e x = 5'
+                    ],
+                    correct: 'a',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual é o valor de x na equação (x + 3)/2 = (2x - 1)/3?',
+                    options: [
+                        'a. 5',
+                        'b. 7',
+                        'c. 9',
+                        'd. 11',
+                        'e. 13'
+                    ],
+                    correct: 'd',
+                    subject: 'math'
+                }
+            ];
+        }
+        
+        function getConcordanciaQuestions() {
+            return [
+                {
+                    question: 'No trecho: "O engenheiro e a médica saíram rapidamente. Seu filho permaneceu no local", ocorre:',
+                    options: [
+                        'a. eufemismo',
+                        'b. comparação',
+                        'c. catacrese',
+                        'd. metonímia',
+                        'e. ambiguidade'
+                    ],
+                    correct: 'e',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Marque a alternativa correta quanto à regência:',
+                    options: [
+                        'a. Trouxe consigo as pessoas de que confiava.',
+                        'b. Trouxe consigo as pessoas para que confiava.',
+                        'c. Trouxe consigo as pessoas em que confiava.',
+                        'd. Trouxe consigo as pessoas das quais confiava.',
+                        'e. Trouxe consigo as pessoas da qual confiava.'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Assinale a alternativa em que a concordância verbal está INCORRETA:',
+                    options: [
+                        'a. Faz dois anos que não o vejo.',
+                        'b. Deve haver muitos candidatos.',
+                        'c. É preciso que se faça silêncio.',
+                        'd. Haja vista os problemas ocorridos.',
+                        'e. Fazem dois anos que não o vejo.'
+                    ],
+                    correct: 'e',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual das alternativas apresenta erro de concordância nominal?',
+                    options: [
+                        'a. Ela mesmo resolveu o problema.',
+                        'b. As crianças estão meio cansadas.',
+                        'c. Os livros são bastantes interessantes.',
+                        'd. Ambos os alunos foram aprovados.',
+                        'e. Anexo seguem os documentos solicitados.'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Assinale a alternativa com concordância verbal correta:',
+                    options: [
+                        'a. Haviam muitos problemas a resolver.',
+                        'b. Fazem dois meses que não nos vemos.',
+                        'c. É necessário que se faça silêncio.',
+                        'd. Existe várias soluções para o caso.',
+                        'e. Precisa-se de vendedores experientes.'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual alternativa apresenta erro de concordância?',
+                    options: [
+                        'a. Os alunos saíram mais cedo hoje.',
+                        'b. A maioria dos professores faltaram à reunião.',
+                        'c. Bastante água foi desperdiçada.',
+                        'd. Ambos os candidatos estão qualificados.',
+                        'e. Ela mesma resolveu a questão.'
+                    ],
+                    correct: 'b',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Assinale a alternativa com concordância nominal correta:',
+                    options: [
+                        'a. Ela ficou meia nervosa com a notícia.',
+                        'b. Os documentos anexo são importantes.',
+                        'c. As crianças estão bastantes animadas.',
+                        'd. As alunas mesmas organizaram o evento.',
+                        'e. Anexo seguem as fotos solicitadas.'
+                    ],
+                    correct: 'd',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual alternativa apresenta concordância verbal correta?',
+                    options: [
+                        'a. Fazem anos que não nos vemos.',
+                        'b. Houveram muitos problemas no evento.',
+                        'c. Existe várias soluções para isso.',
+                        'd. Choveu pedras durante a tempestade.',
+                        'e. Precisa-se de profissionais qualificados.'
+                    ],
+                    correct: 'd',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Assinale a alternativa com concordância nominal incorreta:',
+                    options: [
+                        'a. Ela ficou meio desconfiada.',
+                        'b. Os anexos documentos são urgentes.',
+                        'c. As alunas mesmas organizaram tudo.',
+                        'd. Bastante água foi consumida.',
+                        'e. Ambos os times jogaram bem.'
+                    ],
+                    correct: 'b',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual alternativa apresenta concordância verbal correta?',
+                    options: [
+                        'a. Haviam muitas pessoas na festa.',
+                        'b. Faz dois dias que estou doente.',
+                        'c. Existem vários motivos para isso.',
+                        'd. Choveram ideias durante o brainstorm.',
+                        'e. As opções b, c e d estão corretas.'
+                    ],
+                    correct: 'e',
+                    subject: 'portuguese'
+                }
+            ];
+        }
+        
+        function getIFPEQuestions() {
+            return [
                 {
                     question: 'O professor Valter passou um trabalho com uma enorme quantidade de questões para serem resolvidas. Os alunos perceberam que, se 4 colegas trabalharem 2 horas por dia, eles conseguirão acabar a atividade em um prazo de 6 dias. Se, contudo, o prazo for de, apenas, 2 dias, e um dos colegas ficar doente, não podendo mais ajudar, quantas horas por dia os outros 3 amigos terão que trabalhar para concluir o trabalho no prazo?',
                     options: [
@@ -1735,7 +2441,8 @@
                         'd. 5h',
                         'e. 4h'
                     ],
-                    correct: 'a'
+                    correct: 'a',
+                    subject: 'math'
                 },
                 {
                     question: 'Devido ao reajuste de preços dos fornecedores, o dono de uma loja aumentou os valores de todos os produtos em 20%. Percebendo uma grande queda nas vendas, decidiu dar um desconto de 20% sobre o valor aumentado inicialmente. Com isso, o preço final de venda corresponde:',
@@ -1746,7 +2453,8 @@
                         'd. ao valor do preço original reduzido em 4%',
                         'e. ao valor do preço original aumentado em 2%'
                     ],
-                    correct: 'd'
+                    correct: 'd',
+                    subject: 'math'
                 },
                 {
                     question: 'A partir da leitura do texto sobre o hand spinner, podemos compreender que:',
@@ -1757,26 +2465,381 @@
                         'd. o texto defende que, a exemplo do que ocorreu no Colégio Santo Inácio, o hand spinner deve ser proibido em todas as escolas.',
                         'e. Jairo Werner, especialista em psiquiatria infantil, embora concorde que o hand spinner forneça alívio dos sintomas da ansiedade, defende que seu uso seja feito com parcimônia.'
                     ],
-                    correct: 'e'
+                    correct: 'e',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o resultado de 5! (fatorial de 5)?',
+                    options: [
+                        'a. 20',
+                        'b. 60',
+                        'c. 120',
+                        'd. 240',
+                        'e. 720'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Assinale a alternativa em que todas as palavras estão grafadas corretamente:',
+                    options: [
+                        'a. excessão, ratificar, intercessão',
+                        'b. exceção, ratificar, intercessão',
+                        'c. excessão, retificar, intersessão',
+                        'd. exceção, retificar, intercessão',
+                        'e. exceção, ratificar, intersessão'
+                    ],
+                    correct: 'b',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o valor de x na equação 2x + 3 = 15?',
+                    options: [
+                        'a. 4',
+                        'b. 5',
+                        'c. 6',
+                        'd. 7',
+                        'e. 8'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual das alternativas apresenta um exemplo de metáfora?',
+                    options: [
+                        'a. Seus olhos brilhavam como estrelas.',
+                        'b. O tempo é um rio que corre sem parar.',
+                        'c. O vento uivava como um lobo na noite.',
+                        'd. Ela é tão doce quanto um mel.',
+                        'e. Ele é forte como um touro.'
+                    ],
+                    correct: 'b',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é a área de um círculo com raio de 5 cm? (Use π = 3,14)',
+                    options: [
+                        'a. 15,7 cm²',
+                        'b. 31,4 cm²',
+                        'c. 78,5 cm²',
+                        'd. 157 cm²',
+                        'e. 314 cm²'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Assinale a alternativa em que a concordância verbal está INCORRETA:',
+                    options: [
+                        'a. Faz dois anos que não o vejo.',
+                        'b. Deve haver muitos candidatos.',
+                        'c. É preciso que se faça silêncio.',
+                        'd. Haja vista os problemas ocorridos.',
+                        'e. Fazem dois anos que não o vejo.'
+                    ],
+                    correct: 'e',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o MMC (Mínimo Múltiplo Comum) de 12 e 18?',
+                    options: [
+                        'a. 24',
+                        'b. 36',
+                        'c. 48',
+                        'd. 60',
+                        'e. 72'
+                    ],
+                    correct: 'b',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual das alternativas apresenta apenas palavras oxítonas?',
+                    options: [
+                        'a. café, difícil, táxi',
+                        'b. parabéns, júnior, você',
+                        'c. cipó, saci, urubu',
+                        'd. álbum, tórax, fóssil',
+                        'e. lápis, ônibus, fênix'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o valor de x na equação 3x - 7 = 14?',
+                    options: [
+                        'a. 5',
+                        'b. 6',
+                        'c. 7',
+                        'd. 8',
+                        'e. 9'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Assinale a alternativa em que todas as palavras são paroxítonas:',
+                    options: [
+                        'a. tórax, difícil, álbum',
+                        'b. cipó, táxi, café',
+                        'c. parabéns, júnior, amável',
+                        'd. lápis, ônibus, fênix',
+                        'e. urubu, saci, anzol'
+                    ],
+                    correct: 'a',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o volume de um cubo com aresta de 3 cm?',
+                    options: [
+                        'a. 9 cm³',
+                        'b. 18 cm³',
+                        'c. 27 cm³',
+                        'd. 36 cm³',
+                        'e. 54 cm³'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual das alternativas apresenta erro de ortografia?',
+                    options: [
+                        'a. A sessão de cinema foi emocionante.',
+                        'b. O cerimonial foi impecável.',
+                        'c. Ele fez uma seção de fotos incríveis.',
+                        'd. A cessão de direitos foi assinada.',
+                        'e. O time fez uma cessão de gols impressionante.'
+                    ],
+                    correct: 'e',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o resultado de (2 + 3)²?',
+                    options: [
+                        'a. 10',
+                        'b. 13',
+                        'c. 20',
+                        'd. 25',
+                        'e. 30'
+                    ],
+                    correct: 'd',
+                    subject: 'math'
+                },
+                {
+                    question: 'Assinale a alternativa em que o uso do acento indicador de crase está correto:',
+                    options: [
+                        'a. Vou à escola todos os dias.',
+                        'b. Ele foi a praia no final de semana.',
+                        'c. Refiro-me a você como meu amigo.',
+                        'd. Chegamos a tempo de ver o show.',
+                        'e. Ela assistiu a novela ontem.'
+                    ],
+                    correct: 'a',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o valor de π (pi) arredondado para duas casas decimais?',
+                    options: [
+                        'a. 3,14',
+                        'b. 3,15',
+                        'c. 3,16',
+                        'd. 3,17',
+                        'e. 3,18'
+                    ],
+                    correct: 'a',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual das alternativas apresenta um exemplo de pleonasmo?',
+                    options: [
+                        'a. "O céu está estrelado", disse ela.',
+                        'b. "Subir para cima" é redundante.',
+                        'c. "O sol brilhava intensamente".',
+                        'd. "A chuva caía suavemente".',
+                        'e. "O vento soprava forte".'
+                    ],
+                    correct: 'b',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é a raiz quadrada de 144?',
+                    options: [
+                        'a. 10',
+                        'b. 11',
+                        'c. 12',
+                        'd. 13',
+                        'e. 14'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Assinale a alternativa em que o uso do hífen está correto:',
+                    options: [
+                        'a. anti-inflamatório',
+                        'b. microondas',
+                        'c. autoescola',
+                        'd. superhomem',
+                        'e. todas as alternativas anteriores'
+                    ],
+                    correct: 'a',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o perímetro de um retângulo com lados de 5 cm e 10 cm?',
+                    options: [
+                        'a. 15 cm',
+                        'b. 25 cm',
+                        'c. 30 cm',
+                        'd. 40 cm',
+                        'e. 50 cm'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual das alternativas apresenta um exemplo de linguagem denotativa?',
+                    options: [
+                        'a. "Seus olhos são estrelas brilhantes."',
+                        'b. "O tempo é um rio que corre sem parar."',
+                        'c. "A água ferve a 100°C ao nível do mar."',
+                        'd. "Seu coração é de pedra."',
+                        'e. "A vida é uma caixinha de surpresas."'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o valor de 10% de 250?',
+                    options: [
+                        'a. 10',
+                        'b. 15',
+                        'c. 20',
+                        'd. 25',
+                        'e. 30'
+                    ],
+                    correct: 'd',
+                    subject: 'math'
+                },
+                {
+                    question: 'Assinale a alternativa em que o uso da vírgula está correto:',
+                    options: [
+                        'a. Maria, comprou pão, leite e ovos.',
+                        'b. Ontem fui ao mercado, comprei frutas, e verduras.',
+                        'c. João, meu amigo de infância, chegou ontem.',
+                        'd. O professor disse, que a prova seria fácil.',
+                        'e. Eu gosto de ler, mas não tenho tempo.'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o resultado de 7 × 8?',
+                    options: [
+                        'a. 48',
+                        'b. 54',
+                        'c. 56',
+                        'd. 60',
+                        'e. 64'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual das alternativas apresenta um exemplo de linguagem conotativa?',
+                    options: [
+                        'a. "A Terra gira em torno do Sol."',
+                        'b. "A água é composta por hidrogênio e oxigênio."',
+                        'c. "O inverno começa em junho no hemisfério sul."',
+                        'd. "Seu sorriso iluminou o meu dia."',
+                        'e. "Dois mais dois são quatro."'
+                    ],
+                    correct: 'd',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o MDC (Máximo Divisor Comum) de 36 e 48?',
+                    options: [
+                        'a. 6',
+                        'b. 8',
+                        'c. 12',
+                        'd. 16',
+                        'e. 24'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Assinale a alternativa em que o uso do porquê está correto:',
+                    options: [
+                        'a. Não sei por que você fez isso.',
+                        'b. Ele quis saber o porque daquela atitude.',
+                        'c. Por que você está chorando?',
+                        'd. O motivo, por que ele saiu, é desconhecido.',
+                        'e. Todas as alternativas estão corretas.'
+                    ],
+                    correct: 'c',
+                    subject: 'portuguese'
+                },
+                {
+                    question: 'Qual é o valor de x na equação x/4 = 3?',
+                    options: [
+                        'a. 7',
+                        'b. 9',
+                        'c. 12',
+                        'd. 15',
+                        'e. 18'
+                    ],
+                    correct: 'c',
+                    subject: 'math'
+                },
+                {
+                    question: 'Qual das alternativas apresenta um exemplo de hipérbole?',
+                    options: [
+                        'a. "Estou morrendo de sede."',
+                        'b. "O gato preto cruzou a rua."',
+                        'c. "A água é essencial para a vida."',
+                        'd. "O sol nasce no leste."',
+                        'e. "Dois mais dois são quatro."'
+                    ],
+                    correct: 'a',
+                    subject: 'portuguese'
                 }
             ];
+        }
+        
+        // Função para alternar entre abas
+        function openTab(evt, tabName) {
+            // Esconder todos os conteúdos de abas
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
             
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'bg-gray-50 p-4 rounded-lg';
-                questionDiv.innerHTML = `
-                    <h4 class="font-medium mb-2">${index + 1}. ${q.question}</h4>
-                    <div class="space-y-2">
-                        ${q.options.map(opt => `
-                            <label class="flex items-center">
-                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" class="mr-2">
-                                ${opt}
-                            </label>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(questionDiv);
-            });
+            // Remover classe ativa de todos os botões de aba
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("bg-blue-600", "text-white");
+                tabButtons[i].classList.add("bg-white", "text-blue-600", "border");
+            }
+            
+            // Mostrar a aba atual e adicionar classe ativa ao botão
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.remove("bg-white", "text-blue-600", "border");
+            evt.currentTarget.classList.add("bg-blue-600", "text-white");
+        }
+        
+        // Inicializar a primeira aba como ativa
+        document.addEventListener("DOMContentLoaded", function() {
+            const firstTabButton = document.querySelector(".tab-button");
+            if (firstTabButton) {
+                firstTabButton.classList.remove("bg-white", "text-blue-600", "border");
+                firstTabButton.classList.add("bg-blue-600", "text-white");
+            }
+        });
+        
+        function openSubject(subject) {
+            alert(`Abrindo a pasta de ${subject}`);
+            // Aqui você pode implementar a lógica para carregar os conteúdos do assunto selecionado
         }
     </script>
 </body>
